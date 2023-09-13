@@ -7,9 +7,12 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const MySQLStore = require("express-mysql-session")(session);
 
-dotenv.config();
 const app = express();
 const PORT = 3000;
+
+app.use(expressValidator());
+dotenv.config();
+app.use(express.json());
 
 const options = {
   host: process.env.MY_SQL_HOST,
@@ -29,8 +32,9 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(bodyParser.json());
 app.use(morgan("dev"));
+
+app.use("/", require("./routes/userRoutes"));
 
 sequelize
   .authenticate()
