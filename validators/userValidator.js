@@ -1,4 +1,4 @@
-let raiseErr = async (req) => {
+const raiseErr = async (req) => {
   let errors = await req.getValidationResult();
   if (!errors.isEmpty()) {
     let err = errors.array();
@@ -8,7 +8,7 @@ let raiseErr = async (req) => {
   return null;
 };
 
-let registerValidator = async (req) => {
+const registerValidator = async (req) => {
   req.check("email", "email is required.").not().isEmpty();
   req.check("email", "Invalid email.").isEmail();
   req.check("username", "username is required.").not().isEmpty();
@@ -31,4 +31,16 @@ let registerValidator = async (req) => {
   return await raiseErr(req);
 };
 
-module.exports = { registerValidator };
+const loginValidator = async (req) => {
+  req.check("email", "email is required.").not().isEmpty();
+  req.check("email", "Invalid email.").isEmail();
+  req.check("password", "password is required.").not().isEmpty();
+  req
+    .check("password", "Password must be more than 6 characters")
+    .isLength({ min: 6 });
+
+  //check for errors
+  return await raiseErr(req);
+};
+
+module.exports = { registerValidator, loginValidator };
