@@ -2,6 +2,7 @@
 
 const { Sequelize } = require("sequelize");
 const sequelize = require("../../config/database");
+const { Post } = require("../posts/postModel");
 
 let User = sequelize.define(
   "users",
@@ -27,5 +28,11 @@ let User = sequelize.define(
     collate: "utf8_unicode_ci",
   }
 );
+
+//Relationship
+User.hasMany(Post, {
+  as: "posts", //an alias for the association. Can use user.posts to get all the posts associated with a user.
+  foreignKey: "poster", //This means that the Post model will have a column named poster that references the User model.
+});
 
 module.exports = { User };

@@ -40,12 +40,11 @@ router.post("/login", async (req, res, next) => {
         return res.send({ message: validator });
       }
       const signedIn = await signIn(req);
-    //   console.log(signedIn);
+
       if (signedIn === false) {
         return res.send({ message: "Email or Password is incorrect" });
-      } else {
-        return res.send({ message: "Sign In successfully." });
       }
+      return res.send({ message: "Sign In successfully." });
     }
   } catch (e) {
     return res.status(500).send({ error: `Server error: ${e}` });
