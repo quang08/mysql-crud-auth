@@ -35,7 +35,7 @@ app.use(
 app.use(morgan("dev"));
 
 app.use("/", require("./routes/userRoutes"));
-app.use('/posts', require('./routes/postRoutes'))
+app.use("/posts", require("./routes/postRoutes"));
 
 sequelize
   .authenticate()
